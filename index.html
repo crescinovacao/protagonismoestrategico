@@ -111,9 +111,12 @@
     color: var(--text);
     line-height: 1.5;
   }
-  .option-item:hover {
-    border-color: var(--accent);
-    background: var(--bg-soft);
+  /* Hover só em dispositivos com mouse — evita "seleção fantasma" no mobile */
+  @media (hover: hover) {
+    .option-item:hover {
+      border-color: var(--accent);
+      background: var(--bg-soft);
+    }
   }
 
   /* ── BUTTONS ── */
