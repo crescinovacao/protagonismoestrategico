@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Protagonismo Estratégico | Crescimentum</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&family=Aptos:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --accent: #007BEA;
+    --accent-dark: #001B71;
+    --accent-light: #B3DFFF;
+    --text: #210000;
+    --text-light: #666;
+    --border: #e0e0e0;
+    --bg: #ffffff;
+    --bg-soft: #f4f8fe;
+    --selected-bg: #ebf5ff;
+    --selected-border: #007BEA;
+    --radius: 12px;
+    --max-w: 680px;
+  }
+
+  body {
+    font-family: 'Aptos', 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ── SCREENS ── */
+  .screen {
+    display: none;
+    width: 100%;
+    max-width: var(--max-w);
+    padding: 48px 24px 80px;
+    animation: fadeIn 0.35s ease;
+    flex-direction: column;
+  }
+  .screen.active {
+    display: flex;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── COVER ── */
+  .cover-title {
+    font-family: 'Raleway', sans-serif;
+    font-size: clamp(22px, 5vw, 32px);
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 28px;
+    line-height: 1.2;
+  }
+
+  .cover-text {
+    font-size: clamp(15px, 2.5vw, 16px);
+    line-height: 1.7;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+  .cover-text strong { font-weight: 600; }
+
+  /* ── QUESTION ── */
+  .question-header {
+    margin-bottom: 8px;
+  }
+  .question-counter {
+    font-size: 13px;
+    color: var(--text-light);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+  .question-text {
+    font-family: 'Raleway', sans-serif;
+    font-size: clamp(16px, 3vw, 20px);
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--text);
+    margin-bottom: 24px;
+  }
+
+  /* ── OPTIONS ── */
+  .options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .option-item {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: var(--bg);
+    text-align: left;
+    width: 100%;
+    font-family: inherit;
+    font-size: clamp(14px, 2.3vw, 15px);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .option-item:hover {
+    border-color: var(--accent);
+    background: var(--bg-soft);
+  }
+
+  /* ── BUTTONS ── */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 13px 28px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-primary:hover { background: #0063c5; }
+  .btn-primary:active { transform: scale(0.98); }
+
+  .btn-back {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+    margin-bottom: 28px;
+    font-family: inherit;
+    transition: color 0.2s;
+  }
+  .btn-back:hover { color: var(--text); }
+
+  .btn-restart {
+    background: none;
+    border: 1.5px solid var(--border);
+    color: var(--text-light);
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 22px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-restart:hover {
+    border-color: var(--text-light);
+    color: var(--text);
+  }
+
+  /* ── RESULT ── */
+  .result-card {
+    border: 1.5px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 24px;
+    background: var(--selected-bg);
+  }
+  .result-title {
+    font-family: 'Raleway', sans-serif;
+    font-size: clamp(22px, 4vw, 28px);
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+  .result-description {
+    font-size: clamp(14px, 2.3vw, 16px);
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .result-footer {
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 480px) {
+    .screen { padding: 36px 16px 80px; }
+    .option-item { padding: 14px 16px; }
+    .result-card { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ SCREEN: COVER ══ -->
+<div class="screen active" id="screen-cover">
+  <h1 class="cover-title">Protagonismo Estratégico</h1>
+
+  <img src="https://i.imgur.com/f1hWCjY.png" alt="Protagonismo Estratégico" style="width:100%; height:auto; display:block; margin-bottom:28px;">
+
+  <p class="cover-text" style="margin-bottom:32px;">
+    Este teste vai te ajudar a avaliar se suas ações estão <strong>gerando valor</strong> de acordo com sua <strong>zona estratégica</strong>. Responda às perguntas com sinceridade para obter o melhor resultado.
+  </p>
+
+  <div>
+    <button class="btn-primary" onclick="startTest()">
+      Avançar →
+    </button>
+  </div>
+</div>
+
+<!-- ══ SCREEN: QUESTION ══ -->
+<div class="screen" id="screen-question">
+  <button class="btn-back" onclick="goBack()">← Voltar</button>
+
+  <div class="question-header">
+    <div class="question-counter" id="questionCounter">Pergunta 1</div>
+    <h2 class="question-text" id="questionText"></h2>
+  </div>
+
+  <div class="options-list" id="optionsList"></div>
+</div>
+
+<!-- ══ SCREEN: RESULT ══ -->
+<div class="screen" id="screen-result">
+  <div class="result-card">
+    <h2 class="result-title" id="resultTitle"></h2>
+    <p class="result-description" id="resultDescription"></p>
+  </div>
+
+  <div class="result-footer">
+    <button class="btn-restart" onclick="restart()">↺ Refazer teste</button>
+  </div>
+</div>
+
+<script>
+const decisionTree = {
+  question1: {
+    question: "Essa ação está conectada diretamente ao que minha liderança espera de mim?",
+    options: [
+      { text: "Sim", next: "question2" },
+      { text: "Não", next: "question3" }
+    ]
+  },
+  question2: {
+    question: "Essa ação também contribui com os objetivos mais amplos da organização?",
+    options: [
+      { text: "Sim", next: "resultA" },
+      { text: "Não", next: "question4" }
+    ]
+  },
+  question3: {
+    question: "Mesmo sem ser uma demanda direta da minha liderança, isso contribui para um objetivo relevante da organização?",
+    options: [
+      { text: "Sim", next: "question5" },
+      { text: "Não", next: "resultD" }
+    ]
+  },
+  question4: {
+    question: "Consigo conversar com minha liderança para alinhar expectativas ou renegociar essa prioridade?",
+    options: [
+      { text: "Sim", next: "resultB" },
+      { text: "Não", next: "resultC" }
+    ]
+  },
+  question5: {
+    question: "Tenho autonomia ou recursos para fazer isso sem comprometer minhas responsabilidades principais?",
+    options: [
+      { text: "Sim", next: "resultA" },
+      { text: "Não", next: "resultE" }
+    ]
+  }
+};
+
+const results = {
+  resultA: {
+    title: "🟢 Manda bala!",
+    description: "Essa ação tem tudo a ver com sua zona estratégica: está alinhada com sua liderança, contribui com a organização e você tem recursos para fazer. Siga com protagonismo!"
+  },
+  resultB: {
+    title: "🟡 Alinhe antes de seguir",
+    description: "Essa ação parece válida, mas precisa ser renegociada com sua liderança. Não assuma sozinho sem esse alinhamento, pois pode estar gastando energia fora da zona estratégica."
+  },
+  resultC: {
+    title: "🔴 Cuidado com o esforço em vão",
+    description: "Se não há alinhamento com a liderança e não é prioridade organizacional, seu esforço pode gerar pouco valor. Reflita se vale insistir. Talvez seja melhor reavaliar, abandonar ou simplificar."
+  },
+  resultD: {
+    title: "🟠 Não é sua batalha agora",
+    description: "Essa ação não está dentro da sua zona estratégica. Pode ser importante, mas não necessariamente seu papel agora. Você pode delegar, indicar outra pessoa ou deixar para outro momento."
+  },
+  resultE: {
+    title: "🔵 Ideia boa, mas timing errado",
+    description: "O desafio está alinhado com a organização, mas você não tem recursos ou tempo para assumir agora. Pode ser o caso de priorizar, dividir ou escalar para apoio."
+  }
+};
+
+let history = [];
+let currentState = null;
+let questionNumber = 0;
+
+function goTo(screenId) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(screenId).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function startTest() {
+  history = [];
+  questionNumber = 0;
+  currentState = "question1";
+  loadQuestion();
+  goTo('screen-question');
+}
+
+function loadQuestion() {
+  const q = decisionTree[currentState];
+  questionNumber++;
+  document.getElementById('questionCounter').textContent = `Pergunta ${questionNumber}`;
+  document.getElementById('questionText').textContent = q.question;
+
+  const list = document.getElementById('optionsList');
+  list.innerHTML = '';
+
+  q.options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'option-item';
+    btn.textContent = opt.text;
+    btn.addEventListener('click', () => selectOption(opt.next));
+    list.appendChild(btn);
+  });
+}
+
+function selectOption(next) {
+  history.push(currentState);
+
+  if (next.startsWith('result')) {
+    showResult(next);
+  } else {
+    currentState = next;
+    loadQuestion();
+    window.scrollTo(0, 0);
+  }
+}
+
+function goBack() {
+  if (history.length === 0) {
+    goTo('screen-cover');
+    questionNumber = 0;
+    return;
+  }
+  currentState = history.pop();
+  questionNumber--;
+  loadQuestion();
+}
+
+function showResult(resultKey) {
+  const result = results[resultKey];
+  document.getElementById('resultTitle').textContent = result.title;
+  document.getElementById('resultDescription').textContent = result.description;
+  goTo('screen-result');
+}
+
+function restart() {
+  history = [];
+  questionNumber = 0;
+  currentState = null;
+  goTo('screen-cover');
+}
+</script>
+</body>
+</html>
